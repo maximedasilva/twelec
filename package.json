@@ -1,0 +1,19 @@
+{
+  "name": "twelec",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maximedasilva/twelec.git"
+  },
+  "author": "maxime Da Silva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maximedasilva/twelec/issues"
+  },
+  "homepage": "https://github.com/maximedasilva/twelec#readme"
+}

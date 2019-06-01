@@ -9,7 +9,6 @@ app.use(cors());
 app.get('/', (req, res) => {
   const object = {};
   object.first = 'Hello World!';
-  object.second = process.env.MY_SECRET;
   res.send(object);
 });
 

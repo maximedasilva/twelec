@@ -21,7 +21,8 @@
     "child_process": "^1.0.2",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "twitter": "^1.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

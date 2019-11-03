@@ -5,6 +5,17 @@ import Twitter from 'twitter';
 import fs from 'fs';
 
 const app = express();
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : process.env.host,
+  user     : process.env.username,
+  password : process.env.password,
+  database : process.env.db
+});
+
+connection.connect();
+
+
 
 app.use(cors());
 const filter_text = ["#LR","#LESREPUBLICAINS","#FILLON","#FF2017","#FILLON2017","FILLON",
@@ -23,9 +34,13 @@ let filters ='';
 filters = filter_text.join(',');
 console.log('hello',filters);
 app.get("/", (req, res) => {
-  const object = {};
-  object.first = "Hello World!";
-  res.send(object);
+  let object = {};
+  connection.query('SELECT * from Instrument', function(err, rows, fields) {
+    if (err) throw err;
+    object = {rows};
+    console.log('The solution is: ', rows);
+    res.send(object);
+  });
 });
 
 
@@ -39,15 +54,8 @@ app.listen(process.env.port, () => {
   var stream = twitter.stream('statuses/filter', {track: "rugby, world cup, rwc, RWC, #RWC2019, #NZLvIRE, NZLvIRE"});
   stream.on('data', function(event) {
     if(event.place && event.place.country_code === 'FR') {
-
       console.log(event);
-
     }
-    // console.log(event && event.text);
-    /*console.log(event.coordinates);
-    console.log(event.place);
-    console.log(event.user.location);
-    console.log(event.user.derived.locations)*/
   });
   console.log(`Example app listening on port 3000!`);
 });

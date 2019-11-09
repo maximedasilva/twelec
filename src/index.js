@@ -17,11 +17,17 @@ connection.connect();
 
 
 app.use(cors());
-const filter_text = [
-"#MACRON", "#LAFRANCEENMARCHE", "#MACRON2017","MACRON",
+
+const rugby_text = [
+"rugby", "top14", "top 14"
+];
+const football_text = [
+"football", "foot",  "ligue1", "ligue 1"
 ];
 let filters ='';
-filters = filter_text.join(',');
+filters = rugby_text.join(',');
+filters+= ','
+filters += football_text.join(',')
 console.log('hello',filters);
 
 app.use(require('./controller/tweets'));
@@ -36,13 +42,32 @@ app.listen(process.env.port, () => {
   var stream = twitter.stream('statuses/filter', {track: filters});
   stream.on('data', function(event) {
     if(event.place && event.place.country_code === 'FR') {
+      let isRugby = false
       console.log(event.created_at);
-      console.log(new Date(event.created_at).toISOString().slice(0, 19).replace('T', ' '));
-      console.log('insert into tweets (lieu, date, personne) values('+ event.place.name + ',' + new Date(event.created_at).toISOString().slice(0, 19).replace('T', ' ') + ', macron)')
-      connection.query('insert into tweets (lieu, date, personne) values("'+ event.place.name + '","' + new Date(event.created_at).toISOString().slice(0, 19).replace('T', ' ') + '", "macron")', function(err, rows, fields) {
-        if (err) throw err;
-        console.log('inserted')
+      (rugby_text).forEach(element => {
+        if(event.text.contains(element)) {
+          isRugby = true
+        }
       });
+
+      let isFootball = false
+      (rugby_text).forEach(element => {
+        if(event.text.contains(element)) {
+          isFootball = true
+        }
+      });
+      if(isRugby) {
+        connection.query('insert into tweets (lieu, date, personne) values("'+ event.place.name + '","' + new Date(event.created_at).toISOString().slice(0, 19).replace('T', ' ') + '", "rugby")', function(err, rows, fields) {
+          if (err) throw err;
+          console.log('inserted')
+        });
+      }
+      if(isFootball) {
+        connection.query('insert into tweets (lieu, date, personne) values("'+ event.place.name + '","' + new Date(event.created_at).toISOString().slice(0, 19).replace('T', ' ') + '", "football")', function(err, rows, fields) {
+          if (err) throw err;
+          console.log('inserted')
+        });
+      }
     }
   });
   console.log(`Example app listening on port 3000!`);

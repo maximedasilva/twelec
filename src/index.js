@@ -45,14 +45,22 @@ app.listen(process.env.port, () => {
       let isRugby = false
       console.log(event.created_at);
       (rugby_text).forEach(element => {
+<<<<<<< HEAD
         if(event.text.includes(element)) {
+=======
+        if(event.text.incudes(element)) {
+>>>>>>> 27d98fd6c325efb2c2e6bffe2c0ff5bed5547914
           isRugby = true
         }
       });
 
       let isFootball = false
       (rugby_text).forEach(element => {
+<<<<<<< HEAD
         if(event.text.includes(element)) {
+=======
+        if(event.text.incudes(element)) {
+>>>>>>> 27d98fd6c325efb2c2e6bffe2c0ff5bed5547914
           isFootball = true
         }
       });

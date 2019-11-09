@@ -45,14 +45,14 @@ app.listen(process.env.port, () => {
       let isRugby = false
       console.log(event.created_at);
       (rugby_text).forEach(element => {
-        if(event.text.contains(element)) {
+        if(event.text.includes(element)) {
           isRugby = true
         }
       });
 
       let isFootball = false
       (rugby_text).forEach(element => {
-        if(event.text.contains(element)) {
+        if(event.text.includes(element)) {
           isFootball = true
         }
       });

@@ -33,7 +33,7 @@ app.listen(process.env.port, () => {
     access_token_key: process.env.access_key,
     access_token_secret: process.env.access_secret
   });
-  var stream = twitter.stream('statuses/filter', {track: 'je'});
+  var stream = twitter.stream('statuses/filter', {track: filters});
   stream.on('data', function(event) {
     if(event.place && event.place.country_code === 'FR') {
       console.log(event.created_at);
